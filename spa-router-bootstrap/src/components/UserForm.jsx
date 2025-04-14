@@ -8,6 +8,7 @@ import Alert from 'react-bootstrap/Alert';
 import InputGroup from 'react-bootstrap/InputGroup';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import FormModal from './FormModal';
+import OffCanvas from './OffCanvas';
 import axios from 'axios';
 
 const UserForm = () => {
@@ -43,7 +44,7 @@ const UserForm = () => {
     const form = e.currentTarget;  //this is the item that has the submit event happen to it, which, in this case, is the form itself
     //checkValiditoy() below is a built-in HTML function that returns a boolean value indicateing whether the fomr is valid or not based on HTML5 validation attributes like (required, minlength,maxlength, pattern, etc)
     if (form.checkValidity() === false) {
-      e.stopPropogation();
+      e.stopPropagation();
     } else {
       try {
         const response = await axios.post('https://jsonplaceholder.typicode.com/users', formData);
@@ -82,6 +83,9 @@ const UserForm = () => {
                 onChange={handleChange}
                 required
               />
+              <Form.Control.Feedback type="invalid">
+                Please provide a name
+              </Form.Control.Feedback>
             </Form.Group>
           </Col>
 
@@ -96,6 +100,9 @@ const UserForm = () => {
                 onChange={handleChange}
                 required
               />
+              <Form.Control.Feedback type="invalid">
+                Please input a correct email
+              </Form.Control.Feedback>
             </InputGroup>
           </Col>
         </Row>
@@ -111,6 +118,9 @@ const UserForm = () => {
                 onChange={handleChange}
                 required
               />
+              <Form.Control.Feedback type="invalid">
+                Please input a correct phone number
+              </Form.Control.Feedback>
             </FloatingLabel>
           </Col>
 
@@ -129,6 +139,9 @@ const UserForm = () => {
                 <option>Ice Cream</option>
                 <option>Other</option>
               </Form.Select>
+              <Form.Control.Feedback type="invalid">
+                Please select an option
+              </Form.Control.Feedback>
             </Form.Group>
           </Col>
         </Row>
@@ -144,6 +157,9 @@ const UserForm = () => {
             onChange={handleChange}
             required
           />
+          <Form.Control.Feedback type="invalid">
+            Please provide an email
+          </Form.Control.Feedback>
           <Form.Check
             type="radio"
             id="phone"
@@ -153,13 +169,18 @@ const UserForm = () => {
             onChange={handleChange}
             required
           />
+          {validated && !formData.communication && (
+            <Form.Control.Feedback type="invalid" className="d-block">
+              Please select a communication method
+            </Form.Control.Feedback>
+          )}
         </Form.Group>
 
         <Button variant="primary" type="submit" className="mt-3">
           Submit
         </Button>
       </Form>
-
+      <OffCanvas />
     </Container>
   );
 };
